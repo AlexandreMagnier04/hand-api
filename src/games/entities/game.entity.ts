@@ -1,26 +1,27 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
 
 @Entity()
 export class Game {
-  @PrimaryGeneratedColumn()
-  id: number;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  // CONTRAINTE 4.4 : "Il ne peut pas y avoir un match le même jour"
-  // On ajoute { unique: true } pour que la BDD bloque si on essaie
-  // de créer un 2ème match à la même date.
-  @Column({ unique: true }) 
-  date: Date;
+    // On ajoute { unique: true } pour que la BDD bloque si on essaie de créer un 2ème match à la même date.
+    @Column({ unique: true })
+    date: Date;
 
-  // CONTRAINTE 4.4 : "Un match doit contenir un adversaire"
-  @Column()
-  opponent: string;
+    // "Un match doit contenir un adversaire"
+    @Column()
+    opponent: string;
 
-  // CONTRAINTE 4.4 : "et un score final"
-  // On met 'nullable: true' car au moment de la création (avant le match),
-  // le score n'existe pas encore. Seul le coach le remplira après le match.
-  @Column({ nullable: true })
-  score_hcc: number;
+    // On met 'nullable: true' car au moment de la création (avant le match), le score n'existe pas encore. Seul le coach le remplira après le match.
+    @Column({ nullable: true })
+    score_hcc: number;
 
-  @Column({ nullable: true })
-  score_opponent: number;
+    @Column({ nullable: true })
+    score_opponent: number;
+    
+    @ManyToMany(() => User, (user) => user.games)
+    @JoinTable() //  Crée la table de liaison "game_players_user"
+    players: User[];
 }
