@@ -3,7 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
+<<<<<<< HEAD
 import { ChangeRoleDto } from './dto/change-role.dto';
+=======
+>>>>>>> 231ccd866b48deea68c4b5a6e09b6b45c75f7809
 import * as bcrypt from 'bcrypt'; // L'outil de hachage
 
 @Injectable()
@@ -42,6 +45,7 @@ export class UsersService {
     async findOneByEmail(email: string): Promise<User | null> {
         return this.userRepository.findOne({ where: { email } });
     }
+<<<<<<< HEAD
 
     async updateRole(id: number, changeRoleDto: ChangeRoleDto) {
         // 1. On met à jour l'utilisateur ciblé
@@ -57,3 +61,6 @@ export class UsersService {
     }
 }
 
+=======
+}
+>>>>>>> 231ccd866b48deea68c4b5a6e09b6b45c75f7809

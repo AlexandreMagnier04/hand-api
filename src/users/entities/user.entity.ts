@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany } from 'typeorm'; import { Game } from '../../games/entities/game.entity';
+=======
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany } from 'typeorm';import { Game } from '../../games/entities/game.entity';
+>>>>>>> 231ccd866b48deea68c4b5a6e09b6b45c75f7809
 import { News } from '../../news/entities/news.entity';
 
 // On définit les rôles possibles 
@@ -6,7 +10,10 @@ export enum UserRole {
     COACH = 'coach',
     CONTRIBUTEUR = 'contributeur',
     JOUEUR = 'joueur',
+<<<<<<< HEAD
     ADMIN = 'admin',
+=======
+>>>>>>> 231ccd866b48deea68c4b5a6e09b6b45c75f7809
 }
 
 @Entity()
