@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Controller, Post, Patch, Body, Get, UseGuards, Request, Param } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -11,31 +10,16 @@ import { UserRole } from './entities/user.entity';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
-=======
-import { Controller, Post, Body, Get, UseGuards, Request } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { CreateUserDto } from './dto/create-user.dto';
-
-@Controller('users')
-export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
->>>>>>> 231ccd866b48deea68c4b5a6e09b6b45c75f7809
 
   @Post('register') // L'URL sera : POST /users/register
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> 231ccd866b48deea68c4b5a6e09b6b45c75f7809
   @UseGuards(JwtAuthGuard) // Protection de la route avec le guard JWT
   @Get('profile')
   getProfile(@Request() req) {
     // Si on arrive ici, c'est que le token est valide
-<<<<<<< HEAD
     return req.user;
   }
 
@@ -52,8 +36,5 @@ export class UsersController {
   @Patch(':id/role')
   updateRole(@Param('id') id: string, @Body() changeRoleDto: ChangeRoleDto) {
     return this.usersService.updateRole(+id, changeRoleDto);
-=======
-    return req.user; 
->>>>>>> 231ccd866b48deea68c4b5a6e09b6b45c75f7809
   }
 }

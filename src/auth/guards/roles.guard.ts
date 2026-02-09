@@ -5,11 +5,7 @@ import { ROLES_KEY } from '../decorators/roles.decorator';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-<<<<<<< HEAD
   constructor(private reflector: Reflector) { }
-=======
-  constructor(private reflector: Reflector) {}
->>>>>>> 231ccd866b48deea68c4b5a6e09b6b45c75f7809
 
   canActivate(context: ExecutionContext): boolean {
     // 1. On récupère les rôles exigés par la route (l'étiquette)
@@ -26,14 +22,11 @@ export class RolesGuard implements CanActivate {
     // 2. On récupère l'utilisateur (injecté par le JwtAuthGuard juste avant)
     const { user } = context.switchToHttp().getRequest();
 
-<<<<<<< HEAD
     // Il a accès à tout, peu importe ce que demande la route.
     if (user.role === UserRole.ADMIN) {
       return true;
     }
 
-=======
->>>>>>> 231ccd866b48deea68c4b5a6e09b6b45c75f7809
     // 3. On vérifie si le rôle de l'utilisateur est dans la liste autorisée
     return requiredRoles.some((role) => user.role === role);
   }
