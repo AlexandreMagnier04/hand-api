@@ -18,15 +18,11 @@ Avant de commencer, assurez-vous d'avoir installé :
     cd nom-du-projet
     ```
 
-2.  **Installer les dépendances :**
+2.  **Installer les dépendances : (le db.sqlite sera créé automatiquement à la première exécution)**
 
     ```bash
     npm install
     ```
-
-3.  **Créer le fichier de bdd :**
-
-db.sqlite
 
 ## ▶️ Lancement
 
@@ -101,7 +97,7 @@ _Tout le monde s'inscrit d'abord comme "joueur"._
     ```json
     {
       "email": "admin@club.com",
-      "password": "pass",
+      "password": "pass68",
       "firstname": "Super",
       "lastname": "Admin"
     }
@@ -110,7 +106,7 @@ _Tout le monde s'inscrit d'abord comme "joueur"._
     ```json
     {
       "email": "coach@club.com",
-      "password": "pass",
+      "password": "pass45",
       "firstname": "Jean",
       "lastname": "Traine"
     }
@@ -119,7 +115,7 @@ _Tout le monde s'inscrit d'abord comme "joueur"._
     ```json
     {
       "email": "reporter@club.com",
-      "password": "pass",
+      "password": "pass12",
       "firstname": "Tintin",
       "lastname": "Reporter"
     }
@@ -128,7 +124,7 @@ _Tout le monde s'inscrit d'abord comme "joueur"._
     ```json
     {
       "email": "player@club.com",
-      "password": "pass",
+      "password": "pass78",
       "firstname": "Nico",
       "lastname": "Karabatic"
     }
