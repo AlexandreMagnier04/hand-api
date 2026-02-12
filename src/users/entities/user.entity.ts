@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany } from 'typeorm'; import { Game } from '../../games/entities/game.entity';
 import { News } from '../../news/entities/news.entity';
+import { Exclude } from 'class-transformer';
 
 // On définit les rôles possibles 
 export enum UserRole {
@@ -21,6 +22,7 @@ export class User {
 
     // Le mot de passe sera stocké chiffré (jamais en clair), donc string
     @Column()
+    @Exclude() // Exclut ce champ des réponses JSON (pour ne pas exposer les mots de passe)
     password: string;
 
     @Column()

@@ -51,9 +51,16 @@ export class UsersService {
         return this.userRepository.findOne({ where: { id } });
     }
 
-    // Récupère tous les utilisateurs
     findAll() {
-        return this.userRepository.find();
+        return this.userRepository.find({
+            relations: ['games'], // Affiche les matchs du joueur 
+        });
+    }
+
+    findOne(id: number) {
+        return this.userRepository.findOne({
+            where: { id },
+            relations: ['games'],
+        });
     }
 }
-

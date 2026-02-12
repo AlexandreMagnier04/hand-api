@@ -1,98 +1,212 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🏅 API de Gestion du club de Handball de Comines
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Une API RESTful construite avec **NestJS**, **TypeORM** et **SQLite**. Elle permet la gestion des utilisateurs, des matchs, des inscriptions et des actualités avec un système de permissions strict.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Prérequis
 
-## Description
+Avant de commencer, assurez-vous d'avoir installé :
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- [Node.js](https://nodejs.org/) (version 16 ou supérieure)
+- [Postman](https://www.postman.com/) (pour tester l'API)
 
-## Project setup
+## 🛠️ Installation
 
-```bash
-$ npm install
-```
+1.  **Cloner le projet :**
 
-## Compile and run the project
+    ```bash
+    git clone <LIEN_DU_REPO_GIT>
+    cd nom-du-projet
+    ```
+
+2.  **Installer les dépendances :**
+
+    ```bash
+    npm install
+    ```
+
+## ▶️ Lancement
+
+Pour lancer le serveur en mode développement (avec rechargement automatique) :
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run start
 ```
 
-## Run tests
+# 🛡️ Guide des Rôles & Initialisation des Données
 
-```bash
-# unit tests
-$ npm run test
+### 👑 ADMIN (`admin`)
 
-# e2e tests
-$ npm run test:e2e
+C'est le super-utilisateur. Il possède un "Passe-Partout" lui donnant accès à tout, mais ses fonctions principales sont :
 
-# test coverage
-$ npm run test:cov
-```
+- **Gestion des Utilisateurs :**
+  - Voir la liste de tous les inscrits (avec leurs matchs) : `GET /users`
+  - Voir le profil détaillé d'un utilisateur spécifique : `GET /users/:id`
+  - Changer rôle d'un utilisateur : `PATCH /users/:id/role`
+- **Modération :** Peut modifier ou supprimer n'importe quel contenu (News, Matchs) si nécessaire.
+- **Force Majeure :** Peut inscrire manuellement un joueur à un match : `POST /games/:id/player/:playerId`
 
-## Deployment
+### 🧢 COACH (`coach`)
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Responsable de l'organisation sportive.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+- **Gestion des Matchs :**
+  - Créer un nouveau match : `POST /games`
+  - Modifier un match (Changer la date, ajouter le Score final) : `PATCH /games/:id`
+  - _Note : Impossible de créer deux matchs à la même date._
+- **Gestion d'équipe :**
+  - Inscrire un joueur de force à un match (s'il a oublié de le faire) : `POST /games/:id/player/:playerId`
+- **Lecture :** Peut voir tous les inscrits.
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+### 📰 CONTRIBUTEUR (`contributeur`)
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Responsable de la communication.
 
-## Resources
+- **News :**
+  - Publier une actualité : `POST /news`
+- **Restrictions :** Ne peut pas toucher aux matchs ni aux rôles des utilisateurs.
 
-Check out a few resources that may come in handy when working with NestJS:
+### 🏃 JOUEUR (`joueur`)
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+L'utilisateur standard (rôle par défaut à l'inscription).
 
-## Support
+- **Participation :**
+  - S'inscrire à un match : `POST /games/:id/join`
+  - Se désinscrire d'un match : `DELETE /games/:id/join`
+- **Lecture :**
+  - Voir son propre profil : `GET /users/profile`
+  - Voir la liste des matchs et les news.
+- **Restrictions :** Strictes. Ne peut rien créer, ne peut pas voir la liste des autres utilisateurs, ne peut pas modifier les scores.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### TOUT LE MONDE - **Lecture :** Peut voir la liste des matchs, les news, et les utilsateurs
 
-## Stay in touch
+---
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## 2. Guide d'Initialisation des Données (Seeding) 🚀
 
-## License
+Voici comment peupler votre base de données en partant de zéro, étape par étape, via Postman ou cURL.
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Étape 1 : Créer les 4 comptes de base
+
+_Tout le monde s'inscrit d'abord comme "joueur"._
+
+**Route :** `POST /users/register`
+
+1.  **L'Admin :**
+    ```json
+    {
+      "email": "admin@club.com",
+      "password": "pass",
+      "firstname": "Super",
+      "lastname": "Admin"
+    }
+    ```
+2.  **Le Coach :**
+    ```json
+    {
+      "email": "coach@club.com",
+      "password": "pass",
+      "firstname": "Pep",
+      "lastname": "Guardiola"
+    }
+    ```
+3.  **Le Contributeur :**
+    ```json
+    {
+      "email": "reporter@club.com",
+      "password": "pass",
+      "firstname": "Tintin",
+      "lastname": "Reporter"
+    }
+    ```
+4.  **Le Joueur :**
+    ```json
+    {
+      "email": "player@club.com",
+      "password": "pass",
+      "firstname": "Kylian",
+      "lastname": "Mbappe"
+    }
+    ```
+
+---
+
+### Étape 2 : Changer les rôles manuellement (Via la base de données)
+
+À ce stade, tout le monde est `joueur`. Personne ne peut changer les rôles car il faut être Admin pour le faire.
+
+**Solution :**
+Vous devez intervenir manuellement **une seule fois** dans la base de données (via un outil comme _DB Browser for SQLite_ ou _DBeaver_) pour passer le rôle de `admin@club.com` à `admin`.
+
+Une fois cela fait, connectez-vous en Admin pour récupérer le **TOKEN SUPRÊME**.
+
+**Route :** `POST /auth/login`
+
+- Login : `admin@club.com` / `pass`
+- **Action :** Copiez le `access_token` reçu.
+
+---
+
+### Étape 3 : Assigner les Rôles (Via l'API)
+
+_Utilisez le Token de l'Admin dans le Header `Authorization: Bearer <TOKEN>`._
+
+**Route :** `PATCH /users/:id/role`
+
+1.  **Promouvoir le Coach (ID 2) :**
+    - URL : `http://localhost:3000/users/2/role`
+    - Body : `{ "role": "coach" }`
+2.  **Promouvoir le Contributeur (ID 3) :**
+    - URL : `http://localhost:3000/users/3/role`
+    - Body : `{ "role": "contributeur" }`
+
+---
+
+### Étape 4 : Créer du contenu
+
+#### A. Le Coach crée des matchs 📅
+
+_Connectez-vous avec `coach@club.com` pour récupérer son Token._
+
+**Route :** `POST /games`
+
+- Body :
+  ```json
+  { "date": "2026-06-12T20:00:00.000Z", "opponent": "Real Madrid" }
+  ```
+
+#### B. Le Contributeur crée des news 📰
+
+_Connectez-vous avec `reporter@club.com` pour récupérer son Token._
+
+**Route :** `POST /news`
+
+- Body :
+  ```json
+  {
+    "title": "Match de Gala",
+    "description": "Gros match contre le Real ce soir !"
+  }
+  ```
+
+---
+
+### Étape 5 : La vie du club (Inscriptions & Scores)
+
+#### A. Le Joueur s'inscrit ✍️
+
+_Connectez-vous avec `player@club.com`._
+
+**Route :** `POST /games/1/join` (Aucun body nécessaire)
+
+#### B. Le Match est fini : Le Coach met le score 🏆
+
+_Utilisez le Token du Coach._
+
+**Route :** `PATCH /games/1`
+
+- Body :
+  ```json
+  { "score": "3-1" }
+  ```
+
+---

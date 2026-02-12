@@ -30,6 +30,12 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.usersService.findOne(+id);
+  }
+
   // Seuls les admins peuvent changer les rôles
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN) // Les admins et modérateurs peuvent changer les rôles
