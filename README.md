@@ -24,13 +24,19 @@ Avant de commencer, assurez-vous d'avoir installé :
     npm install
     ```
 
+3.  **Créer le fichier de bdd :**
+
+db.sqlite
+
 ## ▶️ Lancement
 
 Pour lancer le serveur en mode développement (avec rechargement automatique) :
 
 ```bash
-npm run start
+nest start
 ```
+
+##
 
 # 🛡️ Guide des Rôles & Initialisation des Données
 
