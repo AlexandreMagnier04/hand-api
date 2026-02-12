@@ -105,8 +105,8 @@ _Tout le monde s'inscrit d'abord comme "joueur"._
     {
       "email": "coach@club.com",
       "password": "pass",
-      "firstname": "Pep",
-      "lastname": "Guardiola"
+      "firstname": "Jean",
+      "lastname": "Traine"
     }
     ```
 3.  **Le Contributeur :**
@@ -123,8 +123,8 @@ _Tout le monde s'inscrit d'abord comme "joueur"._
     {
       "email": "player@club.com",
       "password": "pass",
-      "firstname": "Kylian",
-      "lastname": "Mbappe"
+      "firstname": "Nico",
+      "lastname": "Karabatic"
     }
     ```
 
@@ -205,8 +205,9 @@ _Utilisez le Token du Coach._
 **Route :** `PATCH /games/1`
 
 - Body :
-  ```json
-  { "score": "3-1" }
-  ```
+
+```json
+{ "score_hcc": 30, "score_opponent": 25 }
+```
 
 ---
